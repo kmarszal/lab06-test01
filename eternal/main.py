@@ -3,14 +3,29 @@ import argparse
 
 
 def calculate(year, month, day):
-    """
-    Calculates day of the week (0-Monday, 1-Tuesday)
-    :param year:
-    :param month:
-    :param day:
-    :return:
-    """
-    return year + month + day
+  ints = [year, month, day]
+  for i in ints:
+    if not isinstance(i,int):
+      raise TypeError
+      
+  if 0 < month < 13:
+    if month == 2:
+      if day > 28 or day <1:
+        raise BaseException
+    elif month in [4,6,9,11]:
+      if day > 30 or day <1:
+        raise BaseException
+    else:
+      if day > 31 or day <1:
+        raise BaseException
+  if month < 3:
+    c = 0
+    z = year - 1
+  else:
+    z = year
+    c = 2
+  ret = (23*month/9 + day + 4 + year + (z/4) + (z/100) + (z/400) - c) % 7
+  return ret
 
 
 def main(args):
